@@ -14,6 +14,6 @@ python.exe -m pip install --upgrade pip
 
 pip install -r requirement.txt
 
-#run app
+# run api
 
 uvicorn main:app
