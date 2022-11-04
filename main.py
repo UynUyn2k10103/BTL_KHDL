@@ -10,21 +10,18 @@ from fastapi.param_functions import Depends
 
 app = FastAPI()
 
-# class Sentence(BaseModel):
-#     sentence : str
+class Sentence(BaseModel):
+    sentence : str
 
 # @app.get("/")
 # def read_root():
 #     return {'Hello' : 'World'}
 
-
     
-@app.post("/sentence/")
-
-async def upload_sentence(sentence : str = Body(..., embed=True)):
+@app.post("/sentence")
+async def upload_sentence(sentence: Sentence):
     # get label
-    label = await predict(sentence)
-    print(label)
+    label = predict(sentence.sentence)
 
     json_compatible_item_data = jsonable_encoder(label)
 
@@ -32,4 +29,5 @@ async def upload_sentence(sentence : str = Body(..., embed=True)):
     
     
     return JSONResponse(json_compatible_item_data)
+    # return label
     
