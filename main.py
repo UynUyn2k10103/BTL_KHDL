@@ -1,21 +1,28 @@
-from typing import Union
 from models.predict_one_sentence import predict
 
-from fastapi import FastAPI, Body
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
-from fastapi.param_functions import Depends
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 class Sentence(BaseModel):
     sentence : str
-
-# @app.get("/")
-# def read_root():
-#     return {'Hello' : 'World'}
 
     
 @app.post("/sentence")
@@ -30,4 +37,3 @@ async def upload_sentence(sentence: Sentence):
     
     return JSONResponse(json_compatible_item_data)
     # return label
-    

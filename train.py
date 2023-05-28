@@ -1,6 +1,6 @@
 from my_utils.metrics import metrics
 from my_utils.evaluate import evaluate
-from models.gru_model import GRUModel
+from models.lstm_models import LSTMModel
 from dataset.load_dataset import *
 from config.config_model import bert_model, tokenizer
 from config.config_args import args
@@ -40,7 +40,7 @@ test_dl = DataLoader(test_dataset,
                      collate_fn=VSFC_DataSet.pack)
 
 #Config model
-model = GRUModel(args).to(args.device)
+model = LSTMModel(args).to(args.device)
 
 params = [x for x in model.parameters() if x.requires_grad]
 optimizer = torch.optim.Adam(params, lr=args.lr)
